@@ -61,3 +61,4 @@ def route_def():  #читаем параметры запроса, направ�
 #on_off_stat()
 #brig_stat()
 route_def()
+#test
