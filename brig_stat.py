@@ -45,19 +45,32 @@ def brig_set(ip_lamp,val):
     print()
     print(json.dumps(dict_new))
 
-def route_def():  #читаем параметры запроса, направляем в нужную функцию
+
+def route_def():  # читаем параметры запроса, направляем в нужную функцию
     form = cgi.FieldStorage()
-    ip = form.getvalue('ip')  #получение ip нужного устройства из переданных параметров
+    ip = form.getvalue('ip')  # получение ip нужного устройства из переданных параметров
     command = form.getvalue('command')
     val = form.getvalue('val')
+    user_name = form.getvalue('name') if form.getvalue(
+        'name') is not None else ''  # ловим имя пользователя, если его нет юзать локальные ip
+    if user_name == '':
+        url = 'http://192.168.0.' + ip
+    elif user_name == 'igor':
+        url = 'http://treig.ddns.net:1289'
+
     if command == 'brig_stat':
-        #brig_stat(ip)
-        on_off_stat(ip)
+        # brig_stat(ip)
+        on_off_stat(url)
     elif command == 'on_off_stat':
-        on_off_stat(ip)
+        on_off_stat(url)
     elif command == 'brig_set':
-        brig_set(ip, val)
+        # brig_set(ip, val)
+        brig_set(url, val)
+
+
+# brig_set(ip, val)
 
 #on_off_stat()
 #brig_stat()
 route_def()
+#
